@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>马卡盾 · 车窗膜电子质保</title>
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --gold: #c8a45c;
+            --gold-light: #e0c878;
+            --bg: #f5f5f0;
+            --card-bg: #ffffff;
+            --text: #2c2c2c;
+            --text-light: #6b6b6b;
+            --border: #e8e8e0;
+            --success: #2d8a56;
+            --danger: #c0392b;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.10);
+            --radius: 14px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ============ 顶部导航栏 ============ */
+        .app-header {
+            background: var(--primary);
+            padding: 0 20px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-logo .shield-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #1a1a2e;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+        .header-logo .brand-name {
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        .header-logo .brand-sub {
+            color: var(--gold-light);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            display: block;
+            line-height: 1;
+        }
+        .header-actions {
+            display: flex;
+            gap: 6px;
+        }
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            position: relative;
+        }
+        .btn-icon:active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0.93);
+        }
+        .btn-icon .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #e74c3c;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+
+        /* ============ 主容器 ============ */
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 16px 16px 100px;
+            animation: fadeInUp 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============ 页面切换 ============ */
+        .page {
+            display: none;
+            animation: fadeInUp 0.4s ease;
+        }
+        .page.active {
+            display: block;
+        }
+
+        /* ============ 卡片 ============ */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px 18px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        .card-full {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* ============ 首页横幅 ============ */
+        .hero-banner {
+            background: linear-gradient(145deg, #1a1a2e 0%, #1e2235 40%, #1a1a2e 100%);
+            border-radius: var(--radius);
+            padding: 28px 22px;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-lg);
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(200, 164, 92, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(224, 200, 120, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-shield {
+            font-size: 48px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 4px 8px rgba(200, 164, 92, 0.4));
+        }
+        .hero-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+            color: var(--gold-light);
+        }
+        .hero-subtitle {
+            font-size: 13px;
+            color: #aaa;
+            margin-top: 4px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============ 快捷入口 ============ */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .quick-action-btn {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 18px 14px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .quick-action-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            background: #fafaf5;
+        }
+        .quick-action-btn .icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .icon-register {
+            background: #fdf2e0;
+            color: #c8a45c;
+        }
+        .icon-query {
+            background: #e8f4f0;
+            color: #2d8a56;
+        }
+        .quick-action-btn .btn-label {
+            font-weight: 700;
+            font-size: 15px;
+            display: block;
+            color: var(--text);
+        }
+        .quick-action-btn .btn-desc {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* ============ 质保统计卡片 ============ */
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .stat-item {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 14px 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+        .stat-value.gold {
+            color: var(--gold);
+        }
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============ 表单样式 ============ */
+        .form-section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 14px;
+            padding-left: 12px;
+            border-left: 3px solid var(--gold);
+            letter-spacing: 0.5px;
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 5px;
+            letter-spacing: 0.3px;
+        }
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 2px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e0e0d8;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            background: #fafaf7;
+            color: var(--text);
+            transition: var(--transition);
+            outline: none;
+            font-family: inherit;
+            -webkit-appearance: none;
+        }
+        .form-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(200, 164, 92, 0.08);
+            background: #fff;
+        }
+        .form-input::placeholder {
+            color: #c0c0b8;
+        }
+        select.form-input {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23999' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 36px;
+        }
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* ============ 产品选择卡片 ============ */
+        .product-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .product-option {
+            border: 2px solid #e8e8e0;
+            border-radius: var(--radius-sm);
+            padding: 14px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: #fafaf7;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .product-option.selected {
+            border-color: var(--gold);
+            background: #fdf8ee;
+            box-shadow: 0 0 0 4px rgba(200, 164, 92, 0.06);
+        }
+        .product-option:active {
+            transform: scale(0.97);
+        }
+        .product-option .prod-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+        }
+        .product-option .prod-warranty {
+            font-size: 11px;
+            color: var(--gold);
+            font-weight: 600;
+            margin-top: 3px;
+        }
+        .product-option .prod-features {
+            font-size: 10px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        /* ============ 提交按钮 ============ */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--gold);
+            color: #1a1a2e;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 14px rgba(200, 164, 92, 0.35);
+            -webkit-tap-highlight-color: transparent;
+            font-family: inherit;
+        }
+        .btn-submit:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 6px rgba(200, 164, 92, 0.25);
+            background: #d4b368;
+        }
+        .btn-submit:disabled {
+            background: #ccc;
+            box-shadow: none;
+            cursor: not-allowed;
+            color: #888;
+        }
+        .btn-outline {
+            width: 100%;
+            padding: 13px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid #d0d0c8;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn-outline:active {
+            background: #f5f5f0;
+            border-color: #b0b0a8;
+        }
+
+        /* ============ 质保卡样式 ============ */
+        .warranty-card {
+            background: linear-gradient(160deg, #fefefe 0%, #fafaf5 40%, #f8f4eb 100%);
+            border: 2px solid #d4c8a8;
+            border-radius: 16px;
+            padding: 24px 18px;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        .warranty-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #c8a45c, #e0c878, #c8a45c);
+            border-radius: 16px 16px 0 0;
+        }
+        .warranty-watermark {
+            position: absolute;
+            right: 16px;
+            top: 20px;
+            font-size: 60px;
+            opacity: 0.04;
+            font-weight: 900;
+            pointer-events: none;
+            color: #c8a45c;
+            letter-spacing: -4px;
+        }
+        .wc-header {
+            text-align: center;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .wc-brand {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #1a1a2e;
+        }
+        .wc-brand span {
+            color: #c8a45c;
+        }
+        .wc-title {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .wc-divider {
+            border: none;
+            border-top: 1px dashed #d4c8a8;
+            margin: 14px 0;
+            position: relative;
+            z-index: 1;
+        }
+        .wc-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 0;
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+        }
+        .wc-info-row .wc-label {
+            color: #888;
+            font-weight: 500;
+            min-width: 60px;
+        }
+        .wc-info-row .wc-value {
+            font-weight: 600;
+            color: #2c2c2c;
+            text-align: right;
+            word-break: break-all;
+        }
+        .wc-qr-area {
+            text-align: center;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed #d4c8a8;
+            position: relative;
+            z-index: 1;
+        }
+        .wc-qr-placeholder {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 6px;
+            background: #f0ede4;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #b0a890;
+        }
+        .wc-verify-text {
+            font-size: 10px;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+        .wc-seal {
+            position: absolute;
+            right: 20px;
+            bottom: 30px;
+            width: 70px;
+            height: 70px;
+            border: 3px solid rgba(200, 164, 92, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-15deg);
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(200, 164, 92, 0.7);
+            letter-spacing: 1px;
+            pointer-events: none;
+            z-index: 1;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* ============ 查询结果 ============ */
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .search-box .form-input {
+            flex: 1;
+        }
+        .search-box .btn-search {
+            padding: 12px 18px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+            font-family: inherit;
+            letter-spacing: 1px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .search-box .btn-search:active {
+            background: #2a2a42;
+            transform: scale(0.95);
+        }
+        .no-result {
+            text-align: center;
+            padding: 40px 20px;
+            color: #aaa;
+        }
+        .no-result .icon-big {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .status-active {
+            background: #e8f5e9;
+            color: #2d8a56;
+        }
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .tag {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: #f0ede4;
+            color: #8a7e6b;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============ Toast ============ */
+        .toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            animation: toastIn 0.35s ease, toastOut 0.35s ease 2.2s forwards;
+            pointer-events: none;
+        }
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        @keyframes toastOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-16px);
+            }
+        }
+        .toast.success {
+            background: #2d8a56;
+        }
+        .toast.error {
+            background: #c0392b;
+        }
+
+        /* ============ 底部导航 ============ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            border-top: 1px solid #e8e8e0;
+            z-index: 90;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04);
+        }
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: #999;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .nav-item.active {
+            color: var(--gold);
+        }
+        .nav-item .nav-icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .nav-item .nav-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============ 响应式微调 ============ */
+        @media (max-width: 380px) {
+            .product-options {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+            .product-option {
+                padding: 10px 6px;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .hero-title {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 顶部导航 ==================== -->
+    <header class="app-header">
+        <div class="header-logo">
+            <div class="shield-icon">🛡</div>
+            <div>
+                <span class="brand-name">马卡盾</span>
+                <span class="brand-sub">MAKADUN · 电子质保</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn-icon" onclick="navigateTo('home')" title="首页">🏠</button>
+            <button class="btn-icon" onclick="navigateTo('register')" title="登记质保">📝</button>
+            <button class="btn-icon" onclick="navigateTo('query')" title="查询质保">🔍</button>
+        </div>
+    </header>
+
+    <!-- ==================== 主容器 ==================== -->
+    <div class="app-container" id="appContainer">
+
+        <!-- ========== 首页 ========== -->
+        <div class="page active" id="page-home">
+            <div class="hero-banner">
+                <div class="hero-shield">🛡️</div>
+                <div class="hero-title">马卡盾 · 车窗膜</div>
+                <div class="hero-subtitle">MAKADUN · 原厂电子质保系统</div>
+            </div>
+
+            <div class="quick-actions">
+                <div class="quick-action-btn" onclick="navigateTo('register')">
+                    <div class="icon-circle icon-register">📋</div>
+                    <span class="btn-label">登记质保</span>
+                    <span class="btn-desc">激活您的质保权益</span>
+                </div>
+                <div class="quick-action-btn" onclick="navigateTo('query')">
+                    <div class="icon-circle icon-query">🔍</div>
+                    <span class="btn-label">查询质保</span>
+                    <span class="btn-desc">验证质保真伪</span>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-value gold" id="totalWarranties">0</div>
+                    <div class="stat-label">累计质保登记</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="activeWarranties">0</div>
+                    <div class="stat-label">有效质保中</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="todayCount">0</div>
+                    <div class="stat-label">今日新增</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--primary);">🏆 质保服务承诺</div>
+                <div style="font-size:12px;color:var(--text-light);line-height:1.7;">
+                    ✅ 所有马卡盾正品车窗膜均享受 <b style="color:var(--gold);">5-10年</b> 原厂质保<br>
+                    ✅ 质保期内出现起泡、褪色、脱落等问题 <b>免费换新</b><br>
+                    ✅ 电子质保卡全国门店通用，一车一码<br>
+                    ✅ 官方客服：<b>400-888-MAKADUN</b>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 登记质保页 ========== -->
+        <div class="page" id="page-register">
+            <div class="card">
+                <div class="form-section-title">📌 车主信息</div>
+                <div class="form-group">
+                    <label>车主姓名 <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="ownerName" placeholder="请输入车主姓名">
+                </div>
+                <div class="form-group">
+                    <label>手机号码 <span class="required">*</span></label>
+                    <input type="tel" class="form-input" id="ownerPhone" placeholder="请输入手机号码" maxlength="11">
+                </div>
+                <div class="form-group">
+                    <label>车牌号码 <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="plateNumber" placeholder="如：粤B·12345">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="form-section-title">🚗 车辆信息</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>车辆品牌 <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="carBrand" placeholder="如：宝马">
+                    </div>
+                    <div class="form-group">
+                        <label>车辆型号</label>
+                        <input type="text" class="form-input" id="carModel" placeholder="如：X5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>车架号(VIN) <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="vinNumber" placeholder="请输入17位车架号" maxlength="17">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="form-section-title">🎬 产品信息</div>
+                <div class="form-group">
+                    <label>选择产品系列 <span class="required">*</span></label>
+                    <div class="product-options" id="productOptions">
+                        <div class="product-option" data-product="马卡盾·钻石系列" data-warranty="10年">
+                            <div class="prod-name">💎 钻石系列</div>
+                            <div class="prod-warranty">质保 10 年</div>
+                            <div class="prod-features">顶级陶瓷膜 · 99%紫外阻隔</div>
+                        </div>
+                        <div class="product-option" data-product="马卡盾·铂金系列" data-warranty="8年">
+                            <div class="prod-name">👑 铂金系列</div>
+                            <div class="prod-warranty">质保 8 年</div>
+                            <div class="prod-features">纳米陶瓷膜 · 高透光</div>
+                        </div>
+                        <div class="product-option" data-product="马卡盾·经典系列" data-warranty="5年">
+                            <div class="prod-name">🛡️ 经典系列</div>
+                            <div class="prod-warranty">质保 5 年</div>
+                            <div class="prod-features">金属磁控膜 · 高性价比</div>
+                        </div>
+                        <div class="product-option" data-product="马卡盾·天窗专用" data-warranty="6年">
+                            <div class="prod-name">☀️ 天窗专用</div>
+                            <div class="prod-warranty">质保 6 年</div>
+                            <div class="prod-features">全景天窗专属防护</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>施工门店</label>
+                    <input type="text" class="form-input" id="shopName" placeholder="请输入施工门店名称">
+                </div>
+                <div class="form-group">
+                    <label>施工日期 <span class="required">*</span></label>
+                    <input type="date" class="form-input" id="installDate">
+                </div>
+            </div>
+
+            <button class="btn-submit" id="btnSubmit" onclick="submitWarranty()">
+                ✅ 提交质保登记
+            </button>
+            <div style="text-align:center;margin-top:10px;font-size:11px;color:#aaa;">
+                提交即表示您同意马卡盾质保条款 · 信息加密传输
+            </div>
+        </div>
+
+        <!-- ========== 查询质保页 ========== -->
+        <div class="page" id="page-query">
+            <div class="card">
+                <div class="form-section-title">🔍 查询电子质保</div>
+                <div class="search-box">
+                    <input type="text" class="form-input" id="searchInput" placeholder="输入手机号或质保编号">
+                    <button class="btn-search" onclick="searchWarranty()">查询</button>
+                </div>
+                <div style="font-size:11px;color:#aaa;text-align:center;">
+                    支持手机号 / 车牌号 / 质保编号查询
+                </div>
+            </div>
+            <div id="searchResult"></div>
+        </div>
+
+        <!-- ========== 质保卡详情页（动态渲染） ========== -->
+        <div class="page" id="page-detail">
+            <div id="detailContent"></div>
+            <button class="btn-outline" style="margin-top:12px;" onclick="navigateTo('query')">
+                ← 返回查询
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== 底部导航 ==================== -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" data-page="home" onclick="navigateTo('home')">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">首页</span>
+        </div>
+        <div class="nav-item" data-page="register" onclick="navigateTo('register')">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">登记质保</span>
+        </div>
+        <div class="nav-item" data-page="query" onclick="navigateTo('query')">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">查询质保</span>
+        </div>
+    </nav>
+
+    <script>
+        (function() {
+            // ============ 数据存储 ============
+            const STORAGE_KEY = 'makadun_warranties';
+            let warranties = [];
+
+            // 初始化：从localStorage加载数据
+            function loadData() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    warranties = raw ? JSON.parse(raw) : [];
+                } catch (e) {
+                    warranties = [];
+                }
+                // 如果有演示数据需求，可以在这里预置一些
+                if (warranties.length === 0 && !localStorage.getItem('makadun_demo_loaded')) {
+                    seedDemoData();
+                    localStorage.setItem('makadun_demo_loaded', '1');
+                }
+            }
+
+            function saveData() {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(warranties));
+            }
+
+            function seedDemoData() {
+                const demos = [{
+                    id: 'MKD20240101001',
+                    ownerName: '张伟',
+                    ownerPhone: '13800001111',
+                    plateNumber: '粤B·88888',
+                    carBrand: '宝马',
+                    carModel: 'X5',
+                    vinNumber: 'WBA1234567890ABCD',
+                    product: '马卡盾·钻石系列',
+                    warrantyYears: '10年',
+                    shopName: '马卡盾深圳旗舰店',
+                    installDate: '2024-01-15',
+                    createdAt: '2024-01-15T10:30:00',
+                    status: 'active'
+                }, {
+                    id: 'MKD20240315002',
+                    ownerName: '李娜',
+                    ownerPhone: '13900002222',
+                    plateNumber: '京A·66666',
+                    carBrand: '奔驰',
+                    carModel: 'E300L',
+                    vinNumber: 'WDD1234567890EFGH',
+                    product: '马卡盾·铂金系列',
+                    warrantyYears: '8年',
+                    shopName: '马卡盾北京授权店',
+                    installDate: '2024-03-20',
+                    createdAt: '2024-03-20T14:00:00',
+                    status: 'active'
+                }, {
+                    id: 'MKD20240601003',
+                    ownerName: '王强',
+                    ownerPhone: '13700003333',
+                    plateNumber: '沪C·12345',
+                    carBrand: '奥迪',
+                    carModel: 'A6L',
+                    vinNumber: 'WAU1234567890IJKL',
+                    product: '马卡盾·经典系列',
+                    warrantyYears: '5年',
+                    shopName: '马卡盾上海浦东店',
+                    installDate: '2024-06-01',
+                    createdAt: '2024-06-01T09:00:00',
+                    status: 'active'
+                }];
+                warranties = demos;
+                saveData();
+            }
+
+            // ============ 生成质保编号 ============
+            function generateWarrantyId() {
+                const now = new Date();
+                const y = now.getFullYear();
+                const m = String(now.getMonth() + 1).padStart(2, '0');
+                const d = String(now.getDate()).padStart(2, '0');
+                const seq = String(warranties.length + 1).padStart(4, '0');
+                return `MKD${y}${m}${d}${seq}`;
+            }
+
+            // ============ Toast ============
+            function showToast(msg, type = '') {
+                const existing = document.querySelector('.toast');
+                if (existing) existing.remove();
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = msg;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 2600);
+            }
+
+            // ============ 页面导航 ============
+            window.navigateTo = function(pageName) {
+                // 隐藏所有页面
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                // 显示目标页面
+                const targetPage = document.getElementById('page-' + pageName);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+                // 更新底部导航
+                document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+                    item.classList.toggle('active', item.dataset.page === pageName);
+                });
+                // 滚动到顶部
+                document.getElementById('appContainer').scrollIntoView({ behavior: 'smooth' });
+                // 刷新统计数据
+                updateStats();
+                // 清空查询结果
+                if (pageName === 'query') {
+                    document.getElementById('searchResult').innerHTML = '';
+                    document.getElementById('searchInput').value = '';
+                }
+                // 如果回到首页或查询页，清空详情
+                if (pageName === 'home' || pageName === 'query') {
+                    const detailPage = document.getElementById('page-detail');
+                    if (detailPage.classList.contains('active')) {
+                        detailPage.classList.remove('active');
+                    }
+                }
+            };
+
+            // ============ 更新统计数据 ============
+            function updateStats() {
+                const totalEl = document.getElementById('totalWarranties');
+                const activeEl = document.getElementById('activeWarranties');
+                const todayEl = document.getElementById('todayCount');
+                if (totalEl) totalEl.textContent = warranties.length;
+                if (activeEl) activeEl.textContent = warranties.filter(w => w.status === 'active').length;
+                if (todayEl) {
+                    const today = new Date().toISOString().split('T')[0];
+                    const todayCount = warranties.filter(w => w.createdAt && w.createdAt.startsWith(today))
+                        .length;
+                    todayEl.textContent = todayCount;
+                }
+            }
+
+            // ============ 产品选择交互 ============
+            let selectedProduct = null;
+            let selectedWarranty = null;
+
+            function initProductSelection() {
+                const options = document.querySelectorAll('#productOptions .product-option');
+                options.forEach(opt => {
+                    opt.addEventListener('click', function() {
+                        options.forEach(o => o.classList.remove('selected'));
+                        this.classList.add('selected');
+                        selectedProduct = this.dataset.product;
+                        selectedWarranty = this.dataset.warranty;
+                    });
+                });
+                // 默认选中第一个
+                if (options.length > 0) {
+                    options[0].classList.add('selected');
+                    selectedProduct = options[0].dataset.product;
+                    selectedWarranty = options[0].dataset.warranty;
+                }
+            }
+
+            // ============ 提交质保登记 ============
+            window.submitWarranty = function() {
+                const ownerName = document.getElementById('ownerName').value.trim();
+                const ownerPhone = document.getElementById('ownerPhone').value.trim();
+                const plateNumber = document.getElementById('plateNumber').value.trim();
+                const carBrand = document.getElementById('carBrand').value.trim();
+                const carModel = document.getElementById('carModel').value.trim();
+                const vinNumber = document.getElementById('vinNumber').value.trim();
+                const shopName = document.getElementById('shopName').value.trim();
+                const installDate = document.getElementById('installDate').value;
+
+                // 验证必填字段
+                if (!ownerName) return showToast('请填写车主姓名', 'error');
+                if (!ownerPhone || !/^1[3-9]\d{9}$/.test(ownerPhone)) return showToast('请填写正确的手机号码',
+                    'error');
+                if (!plateNumber) return showToast('请填写车牌号码', 'error');
+                if (!carBrand) return showToast('请填写车辆品牌', 'error');
+                if (!vinNumber || vinNumber.length < 6) return showToast('请填写正确的车架号(VIN)', 'error');
+                if (!selectedProduct) return showToast('请选择产品系列', 'error');
+                if (!installDate) return showToast('请选择施工日期', 'error');
+
+                // 检查手机号是否已登记
+                const existing = warranties.find(w => w.ownerPhone === ownerPhone && w.plateNumber ===
+                    plateNumber);
+                if (existing) {
+                    return showToast('该手机号+车牌已登记过质保，请勿重复提交', 'error');
+                }
+
+                // 创建质保记录
+                const warranty = {
+                    id: generateWarrantyId(),
+                    ownerName,
+                    ownerPhone,
+                    plateNumber,
+                    carBrand,
+                    carModel: carModel || '-',
+                    vinNumber,
+                    product: selectedProduct,
+                    warrantyYears: selectedWarranty,
+                    shopName: shopName || '马卡盾授权门店',
+                    installDate,
+                    createdAt: new Date().toISOString(),
+                    status: 'active'
+                };
+
+                warranties.unshift(warranty);
+                saveData();
+                updateStats();
+
+                // 显示成功提示 + 展示质保卡
+                showToast('🎉 质保登记成功！', 'success');
+                showWarrantyDetail(warranty);
+
+                // 清空表单
+                document.getElementById('ownerName').value = '';
+                document.getElementById('ownerPhone').value = '';
+                document.getElementById('plateNumber').value = '';
+                document.getElementById('carBrand').value = '';
+                document.getElementById('carModel').value = '';
+                document.getElementById('vinNumber').value = '';
+                document.getElementById('shopName').value = '';
+                document.getElementById('installDate').value = '';
+                // 重置产品选择
+                const options = document.querySelectorAll('#productOptions .product-option');
+                options.forEach(o => o.classList.remove('selected'));
+                if (options.length > 0) {
+                    options[0].classList.add('selected');
+                    selectedProduct = options[0].dataset.product;
+                    selectedWarranty = options[0].dataset.warranty;
+                }
+            };
+
+            // ============ 查询质保 ============
+            window.searchWarranty = function() {
+                const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+                const resultDiv = document.getElementById('searchResult');
+
+                if (!keyword) {
+                    resultDiv.innerHTML = `
+                            <div class="no-result">
+                                <span class="icon-big">🔍</span>
+                                <p>请输入手机号、车牌号或质保编号进行查询</p>
+                            </div>`;
+                    return;
+                }
+
+                const results = warranties.filter(w => {
+                    return w.ownerPhone.includes(keyword) ||
+                        w.plateNumber.toLowerCase().includes(keyword) ||
+                        w.id.toLowerCase().includes(keyword) ||
+                        w.ownerName.toLowerCase().includes(keyword) ||
+                        w.vinNumber.toLowerCase().includes(keyword);
+                });
+
+                if (results.length === 0) {
+                    resultDiv.innerHTML = `
+                            <div class="no-result">
+                                <span class="icon-big">😕</span>
+                                <p>未找到相关质保记录</p>
+                                <p style="font-size:11px;color:#ccc;">请确认输入信息是否正确，或联系门店确认是否已登记</p>
+                            </div>`;
+                    return;
+                }
+
+                resultDiv.innerHTML = results.map(w => `
+                        <div class="card" style="cursor:pointer;" onclick="showWarrantyDetailById('${w.id}')">
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <div style="font-weight:700;font-size:15px;color:var(--primary);">${w.ownerName} · ${w.plateNumber}</div>
+                                    <div style="font-size:12px;color:var(--text-light);margin-top:2px;">${w.product}</div>
+                                    <div style="font-size:10px;color:#aaa;">编号：${w.id}</div>
+                                </div>
+                                <span class="status-badge status-active">✅ 有效</span>
+                            </div>
+                            <div class="tag-row">
+                                <span class="tag">📅 ${w.installDate}</span>
+                                <span class="tag">⏱ 质保${w.warrantyYears}</span>
+                                <span class="tag">🏪 ${w.shopName}</span>
+                            </div>
+                            <div style="font-size:10px;color:#bbb;margin-top:6px;text-align:right;">点击查看电子质保卡 →</div>
+                        </div>
+                    `).join('');
+            };
+
+            // ============ 展示质保卡详情 ============
+            window.showWarrantyDetailById = function(warrantyId) {
+                const warranty = warranties.find(w => w.id === warrantyId);
+                if (!warranty) {
+                    showToast('质保记录不存在', 'error');
+                    return;
+                }
+                showWarrantyDetail(warranty);
+            };
+
+            function showWarrantyDetail(warranty) {
+                // 切换到详情页
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                const detailPage = document.getElementById('page-detail');
+                detailPage.classList.add('active');
+                // 取消底部导航高亮
+                document.querySelectorAll('.bottom-nav .nav-item').forEach(item => item.classList.remove(
+                    'active'));
+
+                const warrantyEndDate = new Date(warranty.installDate);
+                const years = parseInt(warranty.warrantyYears);
+                warrantyEndDate.setFullYear(warrantyEndDate.getFullYear() + years);
+                const endDateStr = warrantyEndDate.toISOString().split('T')[0];
+
+                const isExpired = new Date() > warrantyEndDate;
+                const statusBadge = isExpired ?
+                    '<span class="status-badge" style="background:#fce4e4;color:#c0392b;">⚠️ 已过期</span>' :
+                    '<span class="status-badge status-active">✅ 质保有效</span>';
+
+                document.getElementById('detailContent').innerHTML = `
+                        <div class="warranty-card">
+                            <div class="warranty-watermark">MAKADUN</div>
+                            <div class="wc-header">
+                                <div style="font-size:28px;">🛡️</div>
+                                <div class="wc-brand">马卡<span>盾</span></div>
+                                <div class="wc-title">MAKADUN · 电子质保卡</div>
+                                <div style="margin-top:6px;">${statusBadge}</div>
+                            </div>
+                            <hr class="wc-divider">
+                            <div class="wc-info-row"><span class="wc-label">质保编号</span><span class="wc-value" style="font-weight:800;color:#c8a45c;">${warranty.id}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">车主姓名</span><span class="wc-value">${warranty.ownerName}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">手机号码</span><span class="wc-value">${warranty.ownerPhone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">车牌号码</span><span class="wc-value">${warranty.plateNumber}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">车辆信息</span><span class="wc-value">${warranty.carBrand} ${warranty.carModel}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">车架号</span><span class="wc-value" style="font-size:11px;">${warranty.vinNumber}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">产品系列</span><span class="wc-value" style="color:var(--gold);font-weight:700;">${warranty.product}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">质保年限</span><span class="wc-value">${warranty.warrantyYears}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">施工门店</span><span class="wc-value">${warranty.shopName}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">施工日期</span><span class="wc-value">${warranty.installDate}</span></div>
+                            <div class="wc-info-row"><span class="wc-label">质保截止</span><span class="wc-value">${endDateStr}</span></div>
+                            <div class="wc-qr-area">
+                                <div class="wc-qr-placeholder">📱</div>
+                                <div class="wc-verify-text">扫码验证真伪 · 马卡盾官方质保</div>
+                            </div>
+                            <div class="wc-seal">官方<br>质保</div>
+                        </div>
+                        <div style="text-align:center;margin-top:8px;font-size:10px;color:#bbb;">
+                            电子质保卡 · 伪造必究 · 全国门店通用
+                        </div>
+                    `;
+
+                document.getElementById('appContainer').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // ============ 搜索框回车事件 ============
+            document.addEventListener('DOMContentLoaded', () => {
+                loadData();
+                updateStats();
+                initProductSelection();
+
+                // 设置施工日期默认值为今天
+                const dateInput = document.getElementById('installDate');
+                if (dateInput) {
+                    dateInput.value = new Date().toISOString().split('T')[0];
+                }
+
+                // 搜索框回车
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            searchWarranty();
+                        }
+                    });
+                }
+
+                // 手机号输入限制
+                const phoneInput = document.getElementById('ownerPhone');
+                if (phoneInput) {
+                    phoneInput.addEventListener('input', function() {
+                        this.value = this.value.replace(/\D/g, '').slice(0, 11);
+                    });
+                }
+            });
+
+            // 暴露到全局
+            window.showWarrantyDetail = showWarrantyDetail;
+            window.updateStats = updateStats;
+        })();
+    </script>
+</body>
+</html> 
